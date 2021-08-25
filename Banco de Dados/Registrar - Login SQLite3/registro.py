@@ -44,6 +44,10 @@ def login():
     usuario = input('Nome: ')
     senha = input('Senha: ')
     cursor.execute("SELECT 1 FROM registro WHERE nome = ? AND senha = ? ", (usuario, senha))
+    
+    if len(cursor.fetchall()) == 1:
+        print('Logado')
+        return
 
     if len(cursor.fetchall()) == 1:
         print('Logado')
@@ -62,7 +66,7 @@ def login():
         
         if tentativas >=3 :
             print('Número de tentativas excedeu 3 vezes')
-      
+
     db.close()
 
 #inserir()
