@@ -44,6 +44,10 @@ def login():
     usuario = input('Nome: ')
     senha = input('Senha: ')
     cursor.execute("SELECT 1 FROM registro WHERE nome = ? AND senha = ? ", (usuario, senha))
+    
+    if len(cursor.fetchall()) == 1:
+        print('Logado')
+        return
 
     while len(cursor.fetchall()) == 0 and tentativas < 3:
         print('Senha ou usuario errados')
@@ -52,10 +56,12 @@ def login():
         cursor.execute("SELECT 1 FROM registro WHERE nome = ? AND senha = ?", (usuario, senha))
         tentativas += 1
 
-    if len(cursor.fetchall()) == 0:
-        print('Acesso Negado')
-    else:
-        print('Logado')
+        if len(cursor.fetchall()) == 1:
+            print('Logado')
+            return
+        
+        if tentativas >=3 :
+            print('Número de tentativas excedeu 3 vezes')
 
     db.close()
 
