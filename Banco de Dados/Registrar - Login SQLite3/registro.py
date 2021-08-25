@@ -1,7 +1,6 @@
 '''Programa de Registro e Login ao banco de dados.
 Sem intereção com o usuário. '''
 
-
 import sqlite3
 
 
@@ -35,6 +34,7 @@ def inserir():
 
     db.close
 
+
 def login():
     with sqlite3.connect('registro.db') as db:
         cursor = db.cursor()
@@ -45,6 +45,10 @@ def login():
     senha = input('Senha: ')
     cursor.execute("SELECT 1 FROM registro WHERE nome = ? AND senha = ? ", (usuario, senha))
 
+    if len(cursor.fetchall()) == 1:
+        print('Logado')
+        return
+       
     while len(cursor.fetchall()) == 0 and tentativas < 3:
         print('Senha ou usuario errados')
         usuario = input('Nome: ')
@@ -52,11 +56,13 @@ def login():
         cursor.execute("SELECT 1 FROM registro WHERE nome = ? AND senha = ?", (usuario, senha))
         tentativas += 1
 
-    if len(cursor.fetchall()) == 0:
-        print('Acesso Negado')
-    else:
-        print('Logado')
-
+        if len(cursor.fetchall()) == 1:
+            print('Logado')
+            return
+        
+        if tentativas >=3 :
+            print('Número de tentativas excedeu 3 vezes')
+      
     db.close()
 
 #inserir()
