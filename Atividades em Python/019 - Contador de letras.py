@@ -1,5 +1,0 @@
-nome = str(input("nome completo")).strip()
-print("Maiuscula {}".format(nome.upper()))
-print('Miniscula {}'.format(nome.lower()))
-print('letras ao todo sem espaço é {}'.format(len(nome)-nome.count(' ')))
-print('Lettras no primeiro nome{}'.format(nome.find(' ')))
